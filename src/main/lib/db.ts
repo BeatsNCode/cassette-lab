@@ -21,7 +21,14 @@ export function getDb(): Database.Database {
         cloud_id    TEXT,
         tags        TEXT NOT NULL DEFAULT '[]',
         created_at  TEXT NOT NULL
-      )
+      );
+
+      CREATE TABLE IF NOT EXISTS sync_status (
+        project_id  TEXT PRIMARY KEY REFERENCES projects(id) ON DELETE CASCADE,
+        status      TEXT NOT NULL DEFAULT 'pending',
+        last_synced TEXT,
+        error       TEXT
+      );
     `)
   }
   return db
